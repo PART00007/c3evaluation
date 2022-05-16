@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Css/HomePage.css">
+</head>
+<body>
+    <div id="Navbar">
+        <div>
+            <a href="HomePage.html">Home</a>
+        </div>
+        
+      <div>
+        <a href="SearchPage.html">Search</a> 
+      </div>
+      
+    </div>
+    <div id="container"> 
+
+    </div>
+    <script >
+let container = document.getElementById("container");
+
+async function fetchanddisplay(){
+    try{
+      let url="https://api.openbrewerydb.org/breweries";
+      let product=await fetchData(url);
+       displayproduct(product)
+    }catch(error){
+    console.log(error);
+    }
+}
+async function fetchData(url){
+    try{
+        let res= await fetch(url);
+        let product=await res.json()
+        return product;
+    }catch(error){
+        console.log(error);
+    }
+}
+   function displayproduct(data){
+       data.forEach((prod)=> {
+           let productcard=document.createElement("div");
+           let titname=document.createElement("p");
+           titname.textContent="name:-"+prod.name;
+           let type=document.createElement("p");
+           type.textContent="type:-:"+prod.brewery_type;
+           let ticity=document.createElement("p");
+           ticity.textContent="city:--"+prod.city;
+           let tistate=document.createElement("p");
+           tistate.textContent="state:-"+prod.state;
+           let button=document.createElement("p");
+            button.src=prod.name;
+           productcard.append(titname,type,ticity,tistate,button)
+           container.append(productcard)
+       });
+   }
+
+    fetchanddisplay()
+
+    </script>
+    
+</body>
+</html>
